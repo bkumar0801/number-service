@@ -1,4 +1,4 @@
-package filterurl
+package filter
 
 import (
 	"net/url"
@@ -6,9 +6,9 @@ import (
 )
 
 /*
-Filter ...
+GetValidURLs ...
 */
-func Filter(urls []string) []string {
+func GetValidURLs(urls []string) []string {
 	var validurls []string
 	for _, rawurl := range urls {
 		if IsValidURL(rawurl) {

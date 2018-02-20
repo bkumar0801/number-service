@@ -1,10 +1,10 @@
-package filterurl_test
+package filter_test
 
 import (
 	"reflect"
 	"testing"
 
-	f "taudience.com/number-service/filterurl"
+	f "taudience.com/number-service/filter"
 )
 
 func TestIsValidURLToReturnTrueForValidURL(t *testing.T) {
@@ -46,11 +46,11 @@ func TestIsValidURLToReturnFalseForInvalidURL(t *testing.T) {
 	}
 }
 
-func TestFilterShouldFilterValidURLs(t *testing.T) {
+func TestGetValidURLsShouldFilterValidURLs(t *testing.T) {
 	urls := []string{"http://travelaudience.com", "travelaudience.com",
 		"travelaudience", "https://travelaudience.com", "http://foobar.com/fibo HTTP/1.0"}
 	expected := []string{"http://travelaudience.com", "https://travelaudience.com", "http://foobar.com/fibo"}
-	actual := f.Filter(urls)
+	actual := f.GetValidURLs(urls)
 	if !reflect.DeepEqual(actual, expected) {
 		t.Errorf("Not equal = actual %v expected %v", actual, expected)
 	}
