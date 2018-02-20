@@ -17,6 +17,17 @@ func TestQueryShouldReturnEmptyList(t *testing.T) {
 	}
 }
 
+func TestQueryShouldReturnListOfSortedInteger(t *testing.T) {
+	fakeAppContext := &appCtx.FakeAppContext{}
+	urls := []string{"/numbers?u=x.y/primes", "/numbers?u=x.y/odd", "/numbers?u=x.y/rand", "/numbers?u=x.y/fibo",
+		"/numbers?u=x.y/z"}
+	actual := fakeAppContext.Query(urls)
+	expected := []int{1, 2, 3, 5, 7, 8, 9, 11, 13, 15, 17, 19, 21, 23, 30, 50, 77, 93}
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("Not equal = actual %v expected %v", actual, expected)
+	}
+}
+
 func TestSortKeysShouldSortKeys(t *testing.T) {
 	m := make(map[int]bool)
 	m[10] = true

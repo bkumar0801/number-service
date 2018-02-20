@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"sort"
 	"time"
+
+	"taudience.com/number-service/constant"
 )
 
 /*
@@ -25,13 +27,13 @@ type AppContext struct {
 /*
 Query ...
 */
-func (app *AppContext) Query(urls []string) []int {
+func (appCtx *AppContext) Query(urls []string) []int {
 	c := make(chan Result)
 	set := make(map[int]bool)
 
 	for _, requesturl := range urls {
-		go func() { c <- app.Get(requesturl) }()
-		timeout := time.After(500 * time.Millisecond)
+		go func() { c <- appCtx.Get(requesturl) }()
+		timeout := time.After(constant.Timeout * time.Millisecond)
 		select {
 		case result := <-c:
 			for _, v := range result.Numbers {
@@ -47,7 +49,7 @@ func (app *AppContext) Query(urls []string) []int {
 /*
 Get ...
 */
-func (app *AppContext) Get(requesturl string) Result {
+func (appCtx *AppContext) Get(requesturl string) Result {
 	request, err := http.NewRequest("GET", requesturl, nil)
 	if err != nil {
 		return Result{Numbers: nil, Error: err}
@@ -83,7 +85,7 @@ func do(request *http.Request) ([]byte, error) {
 	}
 
 	if 200 != resp.StatusCode {
-		return nil, fmt.Errorf("%s", body)
+		return nil, fmt.Errorf("Unexpected server response status code: %s", resp.Status)
 	}
 
 	return body, nil

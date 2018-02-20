@@ -5,6 +5,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"taudience.com/number-service/constant"
 )
 
 /*
@@ -14,14 +16,14 @@ type FakeAppContext struct {
 }
 
 /*
-Query ...
+Query ... Fake implementation of Query
 */
-func (app *FakeAppContext) Query(urls []string) []int {
+func (fakeApp *FakeAppContext) Query(urls []string) []int {
 	c := make(chan Result)
 	set := make(map[int]bool)
 	for _, requesturl := range urls {
-		go func() { c <- app.Get(requesturl) }()
-		timeout := time.After(500 * time.Millisecond)
+		go func() { c <- fakeApp.Get(requesturl) }()
+		timeout := time.After(constant.Timeout * time.Millisecond)
 		select {
 		case result := <-c:
 			for _, v := range result.Numbers {
@@ -35,9 +37,9 @@ func (app *FakeAppContext) Query(urls []string) []int {
 }
 
 /*
-Get ...
+Get ...This is the fake implementation to mock /primes /odd /fibo /rand web api
 */
-func (app *FakeAppContext) Get(requesturl string) Result {
+func (fakeApp *FakeAppContext) Get(requesturl string) Result {
 	if strings.Contains(requesturl, "primes") {
 		return Result{Numbers: []int{2, 3, 5, 7, 11, 13}, Error: nil}
 	} else if strings.Contains(requesturl, "odd") {
