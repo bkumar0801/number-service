@@ -16,7 +16,8 @@ type FakeAppContext struct {
 }
 
 /*
-Query ... Fake implementation of Query
+Query ... Fake implementation of Query. The implementation has kept close to real implementation
+for testing purpose. 
 */
 func (fakeApp *FakeAppContext) Query(urls []string) []int {
 	c := make(chan Result)

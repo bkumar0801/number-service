@@ -6,7 +6,7 @@ import (
 )
 
 /*
-GetValidURLs ...
+GetValidURLs ... This method filters all valid URLs from given list of URLs
 */
 func GetValidURLs(urls []string) []string {
 	var validurls []string
@@ -19,7 +19,7 @@ func GetValidURLs(urls []string) []string {
 }
 
 /*
-IsValidURL ...
+IsValidURL ... This method checks if given URL is a valid URL
 */
 func IsValidURL(rawurl string) bool {
 	_, err := url.ParseRequestURI(rawurl)

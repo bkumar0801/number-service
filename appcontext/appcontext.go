@@ -4,8 +4,8 @@ package appcontext
 Result ...
 */
 type Result struct {
-	Numbers []int
-	Error   error
+	Numbers []int // array of numbers received from host server
+	Error   error // if not error the value will be nil
 }
 
 /*
