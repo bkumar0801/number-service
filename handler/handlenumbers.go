@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	appCtx "taudience.com/number-service/appcontext"
+	"taudience.com/number-service/constant"
 	"taudience.com/number-service/filter"
 )
 
@@ -22,7 +23,7 @@ HandleNumbers ...This is a route handler
 */
 func HandleNumbers(app appCtx.ResponseBuilder, w http.ResponseWriter, r *http.Request) {
 	// Filter valid URLs
-	urls := filter.GetValidURLs(r.URL.Query()["u"])
+	urls := filter.GetValidURLs(r.URL.Query()[constant.QueryParam])
 	// Fetch numbers from URLs, and return sorted list of numbers
 	numbers := app.Query(urls)
 	w.Header().Set("Content-Type", "application/json")
